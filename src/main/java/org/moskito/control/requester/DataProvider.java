@@ -1,3 +1,5 @@
+package org.moskito.control.requester;
+
 /**
  * Instance that can be asked to provide data from specified running MoSKito Control application.
  *
