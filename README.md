@@ -1,2 +1,3 @@
-moskito-control-mobile-connector
+moskito-control-requester
 ================================
+a tool to get data from running MoSKito Control application (e.g. for MoSKito Control mobile aplication)
