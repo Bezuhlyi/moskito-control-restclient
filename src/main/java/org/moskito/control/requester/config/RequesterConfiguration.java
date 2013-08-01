@@ -7,4 +7,14 @@ package org.moskito.control.requester.config;
  */
 public class RequesterConfiguration {
 
+	private String urlToRequest;
+
+
+	public String getUrlToRequest() {
+		return urlToRequest;
+	}
+
+	public void setUrlToRequest(String urlToRequest) {
+		this.urlToRequest = urlToRequest;
+	}
 }

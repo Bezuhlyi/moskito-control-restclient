@@ -15,4 +15,5 @@ public class DataProvider {
 
 	private DataProvider() {
 	}
+
 }
