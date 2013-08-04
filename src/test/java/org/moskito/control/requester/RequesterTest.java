@@ -11,7 +11,8 @@ public class RequesterTest {
 		RequesterConfiguration configuration = new RequesterConfiguration();
 
 		Requester requester = new Requester(configuration);
-		requester.requestContent("http://localhost:9090/rest/control");
+		String requestedContent = requester.requestContent("http://localhost:9090/rest/control");
+		System.out.println(requestedContent);
 	}
 
 }

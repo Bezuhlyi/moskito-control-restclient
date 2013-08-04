@@ -1,9 +1,12 @@
 package org.moskito.control.requester;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
 import org.apache.log4j.Logger;
 import org.moskito.control.requester.config.RequesterConfiguration;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -34,6 +37,8 @@ public class Requester {
 	}
 
 	public String requestContent(String url) {
+		InputStreamReader inputStreamReader = null;
+		String content = null;
 		try {
 			URL connectionUrl = new URL(url);
 			HttpURLConnection connection = (HttpURLConnection)connectionUrl.openConnection();
@@ -41,22 +46,28 @@ public class Requester {
 			connection.setReadTimeout(50000 /*miliseconds*/);
 			connection.setRequestMethod(HttpRequestMethod.GET);
 			connection.setDoInput(true);
-			log.debug("Establishing connection. URL: " + url);
+			log.debug("Establishing connection to URL: " + url);
 			connection.connect();
 			int responseCode = connection.getResponseCode();
 			log.debug("Connection established. Response code is: " + responseCode);
-
-			// TODO: reading work here
-
+			log.info("Using " + Charsets.UTF_8 + "charset for content reading.");
+			inputStreamReader = new InputStreamReader(connection.getInputStream(), Charsets.UTF_8);
+			content = CharStreams.toString(inputStreamReader);
 		} catch (MalformedURLException e) {
 			log.warn(e.getMessage(), e);
 		} catch (IOException e) {
 			log.warn(e.getMessage(), e);
 		} finally {
-			// TODO: close streams
+			if(inputStreamReader != null) {
+				try {
+					inputStreamReader.close();
+				} catch (IOException e) {
+					log.info("Connection was tried to be closed but had not been opened.");
+				}
+			}
+			log.info("Result of content request: " + content);
+			return content;
 		}
-
-		return null; // TODO: return real content
 	}
 
 }
