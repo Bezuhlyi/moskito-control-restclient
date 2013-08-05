@@ -12,12 +12,10 @@
 	
 	<logger name="org.moskito.control">
 		<level value="debug" />
-		<appender-ref ref="stdout" />
 	</logger>
 	
 	<logger name="org.configureme.repository">
 		<level value="error" />
-		<appender-ref ref="stdout" />
 	</logger>
 	
 	

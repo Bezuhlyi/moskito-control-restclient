@@ -7,6 +7,7 @@ import org.moskito.control.requester.config.RequesterConfiguration;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -54,6 +55,8 @@ public class Requester {
 			inputStreamReader = new InputStreamReader(connection.getInputStream(), Charsets.UTF_8);
 			content = CharStreams.toString(inputStreamReader);
 		} catch (MalformedURLException e) {
+			log.warn(e.getMessage(), e);
+		} catch (ConnectException e) {
 			log.warn(e.getMessage(), e);
 		} catch (IOException e) {
 			log.warn(e.getMessage(), e);
