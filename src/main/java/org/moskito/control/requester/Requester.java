@@ -3,6 +3,7 @@ package org.moskito.control.requester;
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 import org.apache.log4j.Logger;
+import org.moskito.control.requester.config.HttpRequestMethod;
 import org.moskito.control.requester.config.RequesterConfiguration;
 
 import java.io.IOException;

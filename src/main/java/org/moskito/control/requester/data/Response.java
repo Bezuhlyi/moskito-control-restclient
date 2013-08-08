@@ -9,7 +9,7 @@ public class Response {
 
 	private int protocolVersion;
 
-	private int currentServerTimestamp;
+	private long currentServerTimestamp;
 
 	private List<Application> applications;
 
@@ -22,11 +22,11 @@ public class Response {
 		this.protocolVersion = protocolVersion;
 	}
 
-	public int getCurrentServerTimestamp() {
+	public long getCurrentServerTimestamp() {
 		return currentServerTimestamp;
 	}
 
-	public void setCurrentServerTimestamp(int currentServerTimestamp) {
+	public void setCurrentServerTimestamp(long currentServerTimestamp) {
 		this.currentServerTimestamp = currentServerTimestamp;
 	}
 
@@ -36,6 +36,15 @@ public class Response {
 
 	public void setApplications(List<Application> applications) {
 		this.applications = applications;
+	}
+
+	@Override
+	public String toString() {
+		return "Response{" +
+				"protocolVersion=" + protocolVersion +
+				", currentServerTimestamp=" + currentServerTimestamp +
+				", applications=" + applications +
+				'}';
 	}
 
 }

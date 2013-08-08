@@ -38,4 +38,13 @@ public class Application {
 		this.components = components;
 	}
 
+	@Override
+	public String toString() {
+		return "Application{" +
+				"name='" + name + '\'' +
+				", applicationColor=" + applicationColor +
+				", components=" + components +
+				'}';
+	}
+
 }

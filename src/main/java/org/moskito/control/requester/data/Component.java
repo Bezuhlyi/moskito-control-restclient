@@ -58,4 +58,15 @@ public class Component {
 		this.messages = messages;
 	}
 
+	@Override
+	public String toString() {
+		return "Component{" +
+				"name='" + name + '\'' +
+				", categoty='" + categoty + '\'' +
+				", lastUpdateTimestamp=" + lastUpdateTimestamp +
+				", iso8601timestamp='" + iso8601timestamp + '\'' +
+				", messages=" + messages +
+				'}';
+	}
+
 }

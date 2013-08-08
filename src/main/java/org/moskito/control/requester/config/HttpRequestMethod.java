@@ -1,4 +1,4 @@
-package org.moskito.control.requester;
+package org.moskito.control.requester.config;
 
 /**
  * @author Vladyslav Bezuhlyi
