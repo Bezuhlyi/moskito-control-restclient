@@ -3,7 +3,7 @@ package org.moskito.control.requester.data;
 /**
  * @author Vladyslav Bezuhlyi
  */
-public enum ApplicationColor {
+public enum Color {
 	GREEN,
 	YELLOW,
 	ORANGE,

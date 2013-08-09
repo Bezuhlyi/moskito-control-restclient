@@ -11,6 +11,8 @@ public class Component {
 
 	private String categoty;
 
+	private Color color;
+
 	private long lastUpdateTimestamp;
 
 	private String iso8601timestamp;
@@ -32,6 +34,14 @@ public class Component {
 
 	public void setCategoty(String categoty) {
 		this.categoty = categoty;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	public long getLastUpdateTimestamp() {

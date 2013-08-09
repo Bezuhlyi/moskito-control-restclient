@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.log4j.Logger;
 import org.moskito.control.requester.data.Application;
-import org.moskito.control.requester.data.ApplicationColor;
+import org.moskito.control.requester.data.Color;
 import org.moskito.control.requester.data.Component;
-import org.moskito.control.requester.data.Response;
+import org.moskito.control.requester.data.StatusResponse;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -21,47 +21,49 @@ public class ResponseParser {
 	private Logger log = Logger.getLogger(this.getClass());
 
 
-	public Response parseResponse(String jsonResponse) {
+	public StatusResponse parseStatusResponse(String jsonResponse) {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		Map responseMap = (HashMap) gson.fromJson(jsonResponse, HashMap.class);
-		return parseResponse(responseMap);
+		return parseStatusResponse(responseMap);
 	}
 
-	private Response parseResponse(Map responseMap) {
-		Response response = new Response();
+	private StatusResponse parseStatusResponse(Map responseMap) {
+		StatusResponse statusResponse = new StatusResponse();
 
-		int protocolVersion = ((Double) responseMap.get("protocolVersion")).intValue();
-		long timestamp = ((Double) responseMap.get("currentServerTimestamp")).longValue();
-		List<Application> applications = parseApplications((List<Map>) responseMap.get("applications"));
+		statusResponse.setProtocolVersion(((Double) responseMap.get("protocolVersion")).intValue());
+		statusResponse.setCurrentServerTimestamp(((Double) responseMap.get("currentServerTimestamp")).longValue());
+		statusResponse.setApplications(parseApplications((List<Map>) responseMap.get("applications")));
 
-		response.setProtocolVersion(protocolVersion);
-		response.setCurrentServerTimestamp(timestamp);
-		response.setApplications(applications);
-        return response;
+		return statusResponse;
 	}
 
 	private List<Application> parseApplications(List<Map> applications) {
 		List<Application> result = new LinkedList<Application>();
 
-
 		for (Map item : applications) {
 			Application application = new Application();
-
-			String name = (String) item.get("name");
-			ApplicationColor color = ApplicationColor.valueOf((String) item.get("applicationColor"));
-			List<Component> components = parseComponents((List<Map>) item.get("components"));
-
-			application.setName(name);
-			application.setApplicationColor(color);
-			application.setComponents(components);
+			application.setName((String) item.get("name"));
+			application.setApplicationColor(Color.valueOf((String) item.get("applicationColor")));
+			application.setComponents(parseComponents((List<Map>) item.get("components")));
 			result.add(application);
 		}
 
 		return result;
 	}
 
-	private List<Component> parseComponents(List components) {
+	private List<Component> parseComponents(List<Map> components) {
 		List<Component> result = new LinkedList<Component>();
+
+		for (Map item : components) {
+			Component component = new Component();
+			component.setName((String) item.get("name"));
+			component.setCategoty((String) item.get("category"));
+			component.setColor(Color.valueOf((String) item.get("color")));
+			component.setMessages((List<String>) item.get("messages"));
+			component.setLastUpdateTimestamp(((Double) item.get("lastUpdateTimestamp")).longValue());
+			component.setIso8601timestamp((String) item.get("ISO8601Timestamp"));
+			result.add(component);
+		}
 
 		return result;
 	}

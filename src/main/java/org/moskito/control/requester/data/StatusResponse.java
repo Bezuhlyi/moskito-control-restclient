@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Vladyslav Bezuhlyi
  */
-public class Response {
+public class StatusResponse {
 
 	private int protocolVersion;
 

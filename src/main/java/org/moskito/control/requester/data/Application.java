@@ -9,7 +9,7 @@ public class Application {
 
 	private String name;
 
-	private ApplicationColor applicationColor;
+	private Color applicationColor;
 
 	private List<Component> components;
 
@@ -22,11 +22,11 @@ public class Application {
 		this.name = name;
 	}
 
-	public ApplicationColor getApplicationColor() {
+	public Color getApplicationColor() {
 		return applicationColor;
 	}
 
-	public void setApplicationColor(ApplicationColor applicationColor) {
+	public void setApplicationColor(Color applicationColor) {
 		this.applicationColor = applicationColor;
 	}
 

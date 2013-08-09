@@ -7,14 +7,26 @@ package org.moskito.control.requester.config;
  */
 public class RequesterConfiguration {
 
-	private String urlToRequest;
+	/* milliseconds */
+	private int connectTimeout = 10000;
+
+	/* milliseconds */
+	private int readTimeout = 50000;
 
 
-	public String getUrlToRequest() {
-		return urlToRequest;
+	public int getConnectTimeout() {
+		return connectTimeout;
 	}
 
-	public void setUrlToRequest(String urlToRequest) {
-		this.urlToRequest = urlToRequest;
+	public void setConnectTimeout(int connectTimeout) {
+		this.connectTimeout = connectTimeout;
+	}
+
+	public int getReadTimeout() {
+		return readTimeout;
+	}
+
+	public void setReadTimeout(int readTimeout) {
+		this.readTimeout = readTimeout;
 	}
 }

@@ -44,8 +44,8 @@ public class Requester {
 		try {
 			URL connectionUrl = new URL(url);
 			HttpURLConnection connection = (HttpURLConnection)connectionUrl.openConnection();
-			connection.setConnectTimeout(10000 /*miliseconds*/);
-			connection.setReadTimeout(50000 /*miliseconds*/);
+			connection.setConnectTimeout(configuration.getConnectTimeout());
+			connection.setReadTimeout(configuration.getReadTimeout());
 			connection.setRequestMethod(HttpRequestMethod.GET);
 			connection.setDoInput(true);
 			log.debug("Establishing connection to URL: " + url);
