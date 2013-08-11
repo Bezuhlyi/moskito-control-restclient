@@ -5,30 +5,10 @@ import java.util.List;
 /**
  * @author Vladyslav Bezuhlyi
  */
-public class StatusResponse {
-
-	private int protocolVersion;
-
-	private long currentServerTimestamp;
+public class StatusResponse extends Response {
 
 	private List<Application> applications;
 
-
-	public int getProtocolVersion() {
-		return protocolVersion;
-	}
-
-	public void setProtocolVersion(int protocolVersion) {
-		this.protocolVersion = protocolVersion;
-	}
-
-	public long getCurrentServerTimestamp() {
-		return currentServerTimestamp;
-	}
-
-	public void setCurrentServerTimestamp(long currentServerTimestamp) {
-		this.currentServerTimestamp = currentServerTimestamp;
-	}
 
 	public List<Application> getApplications() {
 		return applications;
@@ -40,11 +20,8 @@ public class StatusResponse {
 
 	@Override
 	public String toString() {
-		return "Response{" +
-				"protocolVersion=" + protocolVersion +
-				", currentServerTimestamp=" + currentServerTimestamp +
-				", applications=" + applications +
+		return "StatusResponse{" +
+				"applications=" + applications +
 				'}';
 	}
-
 }

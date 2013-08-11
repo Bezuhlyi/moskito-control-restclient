@@ -33,4 +33,9 @@ public class DataProvider {
 		return parser.parseStatusResponse(requester.requestContent(url));
 	}
 
+	public HistoryResponse getHistoryResponse(String url, String applicationName) {
+		String fullUrl = url + "/" + applicationName;
+		return parser.parseHistoryResponse(requester.requestContent(fullUrl));
+	}
+
 }

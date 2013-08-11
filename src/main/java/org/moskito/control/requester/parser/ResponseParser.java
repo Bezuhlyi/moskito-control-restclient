@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.moskito.control.requester.data.Application;
 import org.moskito.control.requester.data.Color;
 import org.moskito.control.requester.data.Component;
+import org.moskito.control.requester.data.HistoryItem;
+import org.moskito.control.requester.data.HistoryResponse;
 import org.moskito.control.requester.data.StatusResponse;
 
 import java.util.HashMap;
@@ -20,12 +22,14 @@ public class ResponseParser {
 
 	private Logger log = Logger.getLogger(this.getClass());
 
+	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
 
 	public StatusResponse parseStatusResponse(String jsonResponse) {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		Map responseMap = (HashMap) gson.fromJson(jsonResponse, HashMap.class);
 		return parseStatusResponse(responseMap);
 	}
+
 
 	private StatusResponse parseStatusResponse(Map responseMap) {
 		StatusResponse statusResponse = new StatusResponse();
@@ -63,6 +67,39 @@ public class ResponseParser {
 			component.setLastUpdateTimestamp(((Double) item.get("lastUpdateTimestamp")).longValue());
 			component.setIso8601timestamp((String) item.get("ISO8601Timestamp"));
 			result.add(component);
+		}
+
+		return result;
+	}
+
+	public HistoryResponse parseHistoryResponse(String jsonResponse) {
+		Map responseMap = (HashMap) gson.fromJson(jsonResponse, HashMap.class);
+		return parseHistoryResponse(responseMap);
+	}
+
+	private HistoryResponse parseHistoryResponse(Map responseMap) {
+		HistoryResponse historyResponse = new HistoryResponse();
+
+		historyResponse.setProtocolVersion(((Double) responseMap.get("protocolVersion")).intValue());
+		historyResponse.setCurrentServerTimestamp(((Double) responseMap.get("currentServerTimestamp")).longValue());
+		historyResponse.setHistoryItems(parseHistoryItems((List<Map>) responseMap.get("historyItems")));
+
+		return historyResponse;
+	}
+
+	private List<HistoryItem> parseHistoryItems(List<Map> historyItems) {
+		List<HistoryItem> result = new LinkedList<HistoryItem>();
+
+		for (Map item : historyItems) {
+			HistoryItem historyItem = new HistoryItem();
+			historyItem.setTimestamp(((Double) item.get("timestamp")).longValue());
+			historyItem.setIso8601timestamp((String) item.get("isoTimestamp"));
+			historyItem.setOldStatus(Color.valueOf((String) item.get("oldStatus")));
+			historyItem.setNewStatus(Color.valueOf((String) item.get("newStatus")));
+			historyItem.setComponentName((String) item.get("componentName"));
+			historyItem.setOldMessages((List<String>) item.get("oldMessages"));
+			historyItem.setNewMessages((List<String>) item.get("newMessages"));
+			result.add(historyItem);
 		}
 
 		return result;
