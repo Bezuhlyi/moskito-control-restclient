@@ -41,9 +41,10 @@ public class Requester {
 	public String requestContent(String url) {
 		InputStreamReader inputStreamReader = null;
 		String content = null;
+		HttpURLConnection connection = null;
 		try {
 			URL connectionUrl = new URL(url);
-			HttpURLConnection connection = (HttpURLConnection)connectionUrl.openConnection();
+			connection = (HttpURLConnection)connectionUrl.openConnection();
 			connection.setConnectTimeout(configuration.getConnectTimeout());
 			connection.setReadTimeout(configuration.getReadTimeout());
 			connection.setRequestMethod(HttpRequestMethod.GET);
@@ -69,6 +70,7 @@ public class Requester {
 					log.info("Connection was tried to be closed but had not been opened.");
 				}
 			}
+			connection.disconnect();
 			log.info("Result of content request: " + content);
 			return content;
 		}

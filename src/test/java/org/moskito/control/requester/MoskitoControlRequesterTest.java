@@ -20,7 +20,8 @@ public class MoskitoControlRequesterTest {
 		DataProvider dataProvider = new DataProvider(requester, parser);
 
 		/* Using data. Just for demo. */
-		StatusResponse statusResponse = dataProvider.getStatusResponse("http://localhost:9090/rest/control");
+//		StatusResponse statusResponse = dataProvider.getStatusResponse("http://localhost:9090/rest/control");
+		StatusResponse statusResponse = dataProvider.getStatusResponse("http://server04.test.anotheria.net:8999/moskito-control/rest/control");
 
 		System.out.println(statusResponse.getProtocolVersion());
 		System.out.println(statusResponse.getCurrentServerTimestamp());
