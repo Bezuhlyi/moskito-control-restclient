@@ -1,10 +1,10 @@
-package org.moskito.control.requester;
+package org.moskito.control.restclient.http;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 import org.apache.log4j.Logger;
-import org.moskito.control.requester.config.HttpRequestMethod;
-import org.moskito.control.requester.config.RequesterConfiguration;
+import org.moskito.control.restclient.config.HttpRequestMethod;
+import org.moskito.control.restclient.config.RequesterConfiguration;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -53,7 +53,7 @@ public class Requester {
 			connection.connect();
 			int responseCode = connection.getResponseCode();
 			log.debug("Connection established. Response code is: " + responseCode);
-			log.info("Using " + Charsets.UTF_8 + "charset for content reading.");
+			log.info("Using " + Charsets.UTF_8 + " charset for content reading.");
 			inputStreamReader = new InputStreamReader(connection.getInputStream(), Charsets.UTF_8);
 			content = CharStreams.toString(inputStreamReader);
 		} catch (MalformedURLException e) {
@@ -72,8 +72,8 @@ public class Requester {
 			}
 			connection.disconnect();
 			log.info("Result of content request: " + content);
-			return content;
 		}
+	    return content;
 	}
 
 }

@@ -1,4 +1,4 @@
-package org.moskito.control.requester.config;
+package org.moskito.control.restclient.config;
 
 /**
  * Just for constants.

@@ -1,4 +1,4 @@
-package org.moskito.control.requester.data;
+package org.moskito.control.restclient.data;
 
 /**
  * @author Vladyslav Bezuhlyi

@@ -1,4 +1,7 @@
-package org.moskito.control.requester.data;
+package org.moskito.control.restclient.data.response;
+
+import org.moskito.control.restclient.data.HistoryItem;
+import org.moskito.control.restclient.data.Response;
 
 import java.util.List;
 

@@ -1,7 +1,10 @@
-package org.moskito.control.requester.data;
+package org.moskito.control.restclient;
 
-import org.moskito.control.requester.Requester;
-import org.moskito.control.requester.parser.ResponseParser;
+import org.moskito.control.restclient.data.response.ChartsResponse;
+import org.moskito.control.restclient.data.response.HistoryResponse;
+import org.moskito.control.restclient.data.response.StatusResponse;
+import org.moskito.control.restclient.http.Requester;
+import org.moskito.control.restclient.parser.ResponseParser;
 
 /**
  * Singleton. Instance that can be asked to provide data from specified running MoSKito Control application.
@@ -37,5 +40,11 @@ public class DataProvider {
 		String fullUrl = url + "/" + applicationName;
 		return parser.parseHistoryResponse(requester.requestContent(fullUrl));
 	}
+
+    public ChartsResponse getChartsResponse(String url, String applicationName) {
+		String fullUrl = url + "/" + applicationName;
+        return parser.parseChartsResponse(requester.requestContent(fullUrl));
+
+    }
 
 }

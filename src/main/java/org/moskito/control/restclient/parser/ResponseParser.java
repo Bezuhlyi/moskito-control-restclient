@@ -1,19 +1,14 @@
-package org.moskito.control.requester.parser;
+package org.moskito.control.restclient.parser;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.log4j.Logger;
-import org.moskito.control.requester.data.Application;
-import org.moskito.control.requester.data.Color;
-import org.moskito.control.requester.data.Component;
-import org.moskito.control.requester.data.HistoryItem;
-import org.moskito.control.requester.data.HistoryResponse;
-import org.moskito.control.requester.data.StatusResponse;
+import org.moskito.control.restclient.data.response.ChartsResponse;
+import org.moskito.control.restclient.data.response.HistoryResponse;
+import org.moskito.control.restclient.data.response.StatusResponse;
+import org.moskito.control.restclient.data.*;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Vladyslav Bezuhlyi
@@ -24,12 +19,11 @@ public class ResponseParser {
 
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-
+    /* Status parsing */
 	public StatusResponse parseStatusResponse(String jsonResponse) {
-		Map responseMap = (HashMap) gson.fromJson(jsonResponse, HashMap.class);
+		Map responseMap = gson.fromJson(jsonResponse, HashMap.class);
 		return parseStatusResponse(responseMap);
 	}
-
 
 	private StatusResponse parseStatusResponse(Map responseMap) {
 		StatusResponse statusResponse = new StatusResponse();
@@ -72,8 +66,10 @@ public class ResponseParser {
 		return result;
 	}
 
+
+    /* History parsing */
 	public HistoryResponse parseHistoryResponse(String jsonResponse) {
-		Map responseMap = (HashMap) gson.fromJson(jsonResponse, HashMap.class);
+		Map responseMap = gson.fromJson(jsonResponse, HashMap.class);
 		return parseHistoryResponse(responseMap);
 	}
 
@@ -104,5 +100,60 @@ public class ResponseParser {
 
 		return result;
 	}
+
+
+    /* Charts parsing */
+    public ChartsResponse parseChartsResponse(String jsonResponse) {
+        Map responseMap = gson.fromJson(jsonResponse, HashMap.class);
+        return parseChartsResponse(responseMap);
+    }
+
+    private ChartsResponse parseChartsResponse(Map responseMap) {
+        ChartsResponse chartsResponse = new ChartsResponse();
+
+        chartsResponse.setProtocolVersion(((Double) responseMap.get("protocolVersion")).intValue());
+        chartsResponse.setCurrentServerTimestamp(((Double) responseMap.get("currentServerTimestamp")).longValue());
+        chartsResponse.setCharts(parseCharts((List<Map>) responseMap.get("charts")));
+
+        return chartsResponse;
+    }
+
+    private List<Chart> parseCharts(List<Map> charts) {
+        List<Chart> result = new LinkedList<Chart>();
+
+        for (Map item : charts) {
+            Chart chart = new Chart();
+            chart.setName((String) item.get("name"));
+            chart.setLines(parsePoints((List<Map>) item.get("points")));
+            // when lines are ready setting their names
+            chart.setLinesNames((List<String>) item.get("lineNames"));
+            result.add(chart);
+        }
+
+        return result;
+    }
+
+    private List<Line> parsePoints(List<Map> points) {
+        List<Line> result = new LinkedList<Line>();
+
+        // every point in response turns into number of points how many values by line it has
+        int linesAmount = ((List) points.get(0).get("values")).size();
+        for (int lineIndex = 0; lineIndex < linesAmount; lineIndex++) {
+            Line line = new Line();
+            List<Point> linePoints = new LinkedList<Point>();
+            for (Map item : points) {
+                Point point = new Point();
+                List<String> pointValues = (List<String>) item.get("values");
+                point.setX((String) item.get("caption"));
+                point.setY(pointValues.get(lineIndex));
+                linePoints.add(point);
+            }
+            line.setPoints(linePoints);
+            result.add(line);
+        }
+
+        // lines names will be set separately
+        return result;
+    }
 
 }

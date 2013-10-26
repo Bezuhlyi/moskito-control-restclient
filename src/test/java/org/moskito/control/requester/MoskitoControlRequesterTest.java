@@ -1,13 +1,13 @@
 package org.moskito.control.requester;
 
-import org.moskito.control.requester.config.RequesterConfiguration;
-import org.moskito.control.requester.data.Application;
-import org.moskito.control.requester.data.Component;
-import org.moskito.control.requester.data.DataProvider;
-import org.moskito.control.requester.data.HistoryItem;
-import org.moskito.control.requester.data.HistoryResponse;
-import org.moskito.control.requester.data.StatusResponse;
-import org.moskito.control.requester.parser.ResponseParser;
+import org.moskito.control.restclient.DataProvider;
+import org.moskito.control.restclient.http.Requester;
+import org.moskito.control.restclient.config.RequesterConfiguration;
+import org.moskito.control.restclient.data.*;
+import org.moskito.control.restclient.data.response.ChartsResponse;
+import org.moskito.control.restclient.data.response.HistoryResponse;
+import org.moskito.control.restclient.data.response.StatusResponse;
+import org.moskito.control.restclient.parser.ResponseParser;
 
 /**
  * @author Vladyslav Bezuhlyi
@@ -21,8 +21,22 @@ public class MoskitoControlRequesterTest {
 		ResponseParser parser = new ResponseParser();
 		DataProvider dataProvider = new DataProvider(requester, parser);
 
+        /* Using charts response. Just for demo. */
+        ChartsResponse chartsResponse = dataProvider.getChartsResponse("http://server04.test.anotheria.net:8999/moskito-control/rest/charts/points", "FirstApp");
+        System.out.println(chartsResponse.getProtocolVersion());
+        System.out.println(chartsResponse.getCurrentServerTimestamp());
+        for (Chart chart : chartsResponse.getCharts()) {
+            System.out.println(chart.getName());
+            for (Line line : chart.getLines()) {
+                System.out.println(line.getName());
+                for (Point point : line.getPoints()) {
+                    System.out.println("x="+point.getX());
+                    System.out.println("y="+point.getY());
+                }
+            }
+        }
+
 		/* Using status response. Just for demo. */
-//		StatusResponse statusResponse = dataProvider.getStatusResponse("http://localhost:9090/rest/control");
 		StatusResponse statusResponse = dataProvider.getStatusResponse("http://server04.test.anotheria.net:8999/moskito-control/rest/control");
 
 		System.out.println(statusResponse.getProtocolVersion());
@@ -63,7 +77,9 @@ public class MoskitoControlRequesterTest {
 		}
 
 		/* Readable views of responses. toString() of every nested element is being used. Just for test. */
-		System.out.println("\nFull view of status response: ");
+        System.out.println("\nFull view of charts response: ");
+        System.out.println(historyResponse);
+        System.out.println("\nFull view of status response: ");
 		System.out.println(statusResponse);
 		System.out.println("\nFull view of history response: ");
 		System.out.println(historyResponse);
