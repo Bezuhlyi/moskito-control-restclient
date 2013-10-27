@@ -19,14 +19,24 @@ public class ResponseParser {
 
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    /* Status parsing */
+/* Status parsing */
+
+    /**
+     * Parses status response.
+     * @param jsonResponse JSON response.
+     * @return {@link StatusResponse} or <code>null</code> if jsonResponse is null.
+     */
 	public StatusResponse parseStatusResponse(String jsonResponse) {
 		Map responseMap = gson.fromJson(jsonResponse, HashMap.class);
 		return parseStatusResponse(responseMap);
 	}
 
 	private StatusResponse parseStatusResponse(Map responseMap) {
-		StatusResponse statusResponse = new StatusResponse();
+        if(responseMap == null) {
+            return null;
+        }
+
+        StatusResponse statusResponse = new StatusResponse();
 
 		statusResponse.setProtocolVersion(((Double) responseMap.get("protocolVersion")).intValue());
 		statusResponse.setCurrentServerTimestamp(((Double) responseMap.get("currentServerTimestamp")).longValue());
@@ -66,15 +76,24 @@ public class ResponseParser {
 		return result;
 	}
 
+/* History parsing */
 
-    /* History parsing */
+    /**
+     * Parses history response.
+     * @param jsonResponse JSON response.
+     * @return {@link HistoryResponse} or <code>null</code> if jsonResponse is null.
+     */
 	public HistoryResponse parseHistoryResponse(String jsonResponse) {
 		Map responseMap = gson.fromJson(jsonResponse, HashMap.class);
 		return parseHistoryResponse(responseMap);
 	}
 
 	private HistoryResponse parseHistoryResponse(Map responseMap) {
-		HistoryResponse historyResponse = new HistoryResponse();
+        if(responseMap == null) {
+            return null;
+        }
+
+        HistoryResponse historyResponse = new HistoryResponse();
 
 		historyResponse.setProtocolVersion(((Double) responseMap.get("protocolVersion")).intValue());
 		historyResponse.setCurrentServerTimestamp(((Double) responseMap.get("currentServerTimestamp")).longValue());
@@ -101,14 +120,23 @@ public class ResponseParser {
 		return result;
 	}
 
+/* Charts parsing */
 
-    /* Charts parsing */
+    /**
+     * Parses charts response.
+     * @param jsonResponse JSON response.
+     * @return {@link ChartsResponse} or <code>null</code> if jsonResponse is null.
+     */
     public ChartsResponse parseChartsResponse(String jsonResponse) {
         Map responseMap = gson.fromJson(jsonResponse, HashMap.class);
         return parseChartsResponse(responseMap);
     }
 
     private ChartsResponse parseChartsResponse(Map responseMap) {
+        if(responseMap == null) {
+            return null;
+        }
+
         ChartsResponse chartsResponse = new ChartsResponse();
 
         chartsResponse.setProtocolVersion(((Double) responseMap.get("protocolVersion")).intValue());

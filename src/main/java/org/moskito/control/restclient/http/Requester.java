@@ -14,7 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Requester for running MoSKito Control application.
+ * HTTP-requester for MoSKito Control REST interface.
  *
  * @author Vladyslav Bezuhlyi
  */
