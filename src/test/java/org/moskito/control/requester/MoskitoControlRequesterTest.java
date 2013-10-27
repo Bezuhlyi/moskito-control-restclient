@@ -34,6 +34,7 @@ public class MoskitoControlRequesterTest {
                     for (Point point : line.getPoints()) {
                         System.out.println("x="+point.getX());
                         System.out.println("y="+point.getY());
+                        System.out.println(point.getTimestamp());
                     }
                 }
             }

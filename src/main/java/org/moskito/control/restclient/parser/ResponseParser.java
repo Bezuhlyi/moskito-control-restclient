@@ -174,6 +174,7 @@ public class ResponseParser {
                 List<String> pointValues = (List<String>) item.get("values");
                 point.setX((String) item.get("caption"));
                 point.setY(pointValues.get(lineIndex));
+                point.setTimestamp(((Double) item.get("timestamp")).longValue());
                 linePoints.add(point);
             }
             line.setPoints(linePoints);

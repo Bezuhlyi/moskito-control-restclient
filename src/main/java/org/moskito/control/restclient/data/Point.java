@@ -9,13 +9,16 @@ public class Point {
 
     private String y;
 
+    private long timestamp;
+
 
     public Point() {
     }
 
-    public Point(String x, String y) {
+    public Point(String x, String y, long timestamp) {
         this.x = x;
         this.y = y;
+        this.timestamp = timestamp;
     }
 
 
@@ -35,11 +38,20 @@ public class Point {
         this.y = y;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
     @Override
     public String toString() {
         return "Point{" +
                 "x='" + x + '\'' +
                 ", y='" + y + '\'' +
+                ", timestamp=" + timestamp +
                 '}';
     }
 
