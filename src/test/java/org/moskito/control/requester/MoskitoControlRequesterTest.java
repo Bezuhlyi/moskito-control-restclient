@@ -84,6 +84,30 @@ public class MoskitoControlRequesterTest {
             }
         }
 
+        /* Using history response with HTTP basic auth. Just for demo. */
+        configuration.setBasicAuthEnabled(true);
+        configuration.setLogin("login");
+        configuration.setPassword("password");
+        HistoryResponse historyResponseBasicAuth = dataProvider.getHistoryResponse("http://server04.test.anotheria.net:8999/moskito-control/rest/history", "FirstApp");
+
+        if (historyResponseBasicAuth != null) {
+            System.out.println(historyResponseBasicAuth.getProtocolVersion());
+            System.out.println(historyResponseBasicAuth.getCurrentServerTimestamp());
+            for(HistoryItem historyItem : historyResponseBasicAuth.getHistoryItems()) {
+                System.out.println(historyItem.getTimestamp());
+                System.out.println(historyItem.getIso8601timestamp());
+                System.out.println(historyItem.getOldStatus());
+                System.out.println(historyItem.getNewStatus());
+                System.out.println(historyItem.getComponentName());
+                for (String message : historyItem.getOldMessages()) {
+                    System.out.println(message);
+                }
+                for (String message : historyItem.getNewMessages()) {
+                    System.out.println(message);
+                }
+            }
+        }
+
 		/* Readable views of responses. toString() of every nested element is being used. Just for test. */
         System.out.println("\nFull view of charts response: ");
         System.out.println(historyResponse);
@@ -91,6 +115,8 @@ public class MoskitoControlRequesterTest {
 		System.out.println(statusResponse);
 		System.out.println("\nFull view of history response: ");
 		System.out.println(historyResponse);
+        System.out.println("\nFull view of history response (HTTP basic auth): ");
+		System.out.println(historyResponseBasicAuth);
 	}
 
 }

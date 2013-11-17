@@ -1,6 +1,7 @@
 package org.moskito.control.restclient.http;
 
 import com.google.common.base.Charsets;
+import com.google.common.io.BaseEncoding;
 import com.google.common.io.CharStreams;
 import org.apache.log4j.Logger;
 import org.moskito.control.restclient.config.HttpRequestMethod;
@@ -49,6 +50,11 @@ public class Requester {
 			connection.setReadTimeout(configuration.getReadTimeout());
 			connection.setRequestMethod(HttpRequestMethod.GET);
 			connection.setDoInput(true);
+            if (configuration.isBasicAuthEnabled()) {
+                String authorization = configuration.getLogin() + ":" + configuration.getPassword();
+                String encoded = BaseEncoding.base64().encode(authorization.getBytes());
+                connection.setRequestProperty("Authorization", "Basic " + encoded);
+            }
 			log.debug("Establishing connection to URL: " + url);
 			connection.connect();
 			int responseCode = connection.getResponseCode();
@@ -70,8 +76,10 @@ public class Requester {
 					log.info("Connection was tried to be closed but had not been opened.");
 				}
 			}
-			connection.disconnect();
-			log.info("Result of content request: " + content);
+            if (connection != null) {
+                connection.disconnect();
+            }
+            log.info("Result of content request: " + content);
 		}
 	    return content;
 	}
