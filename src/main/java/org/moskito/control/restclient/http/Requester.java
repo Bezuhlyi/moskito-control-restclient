@@ -43,6 +43,7 @@ public class Requester {
 		InputStreamReader inputStreamReader = null;
 		String content = null;
 		HttpURLConnection connection = null;
+        url = url.replaceAll("\\+", "%20"); // to handle spaces in URL properly
 		try {
 			URL connectionUrl = new URL(url);
 			connection = (HttpURLConnection)connectionUrl.openConnection();
