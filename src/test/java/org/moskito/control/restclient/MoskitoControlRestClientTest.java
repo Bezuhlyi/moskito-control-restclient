@@ -1,6 +1,5 @@
-package org.moskito.control.requester;
+package org.moskito.control.restclient;
 
-import org.moskito.control.restclient.DataProvider;
 import org.moskito.control.restclient.http.Requester;
 import org.moskito.control.restclient.config.RequesterConfiguration;
 import org.moskito.control.restclient.data.*;
@@ -12,7 +11,7 @@ import org.moskito.control.restclient.parser.ResponseParser;
 /**
  * @author Vladyslav Bezuhlyi
  */
-public class MoskitoControlRequesterTest {
+public class MoskitoControlRestClientTest {
 
 	public static void main(String[] args) {
 		/* Configuration. */
