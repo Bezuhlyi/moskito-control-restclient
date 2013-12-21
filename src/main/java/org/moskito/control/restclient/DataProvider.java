@@ -6,6 +6,9 @@ import org.moskito.control.restclient.data.response.StatusResponse;
 import org.moskito.control.restclient.http.Requester;
 import org.moskito.control.restclient.parser.ResponseParser;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * Singleton. Instance that can be asked to provide data from specified MoSKito Control application.
  *
@@ -50,7 +53,10 @@ public class DataProvider {
      * @return {@link HistoryResponse} or <code>null</code> in case of data retrieving error.
      */
 	public HistoryResponse getHistoryResponse(String url, String applicationName) {
-		String fullUrl = url + "/" + applicationName;
+        try {
+            applicationName = URLEncoder.encode(applicationName, "utf-8");
+        } catch (UnsupportedEncodingException ignore) {}
+        String fullUrl = url + "/" + applicationName;
 		return parser.parseHistoryResponse(requester.requestContent(fullUrl));
 	}
 
@@ -62,7 +68,10 @@ public class DataProvider {
      * @return {@link ChartsResponse} or <code>null</code> in case of data retrieving error.
      */
     public ChartsResponse getChartsResponse(String url, String applicationName) {
-		String fullUrl = url + "/" + applicationName;
+        try {
+            applicationName = URLEncoder.encode(applicationName, "utf-8");
+        } catch (UnsupportedEncodingException ignore) {}
+        String fullUrl = url + "/" + applicationName;
         return parser.parseChartsResponse(requester.requestContent(fullUrl));
     }
 
